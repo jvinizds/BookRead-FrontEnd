@@ -8,7 +8,7 @@ const Rodape = () => {
 
     return (
         <Navbar bg="dark" fixed="bottom">
-            <Navbar.Brand href="#inicio" className="text-light">
+            <Navbar.Brand href="#/" className="text-light">
                 <BsBook/> BookRead &copy; - Todos os direitos reservados
             </Navbar.Brand>
         </Navbar>

@@ -1,0 +1,45 @@
+.livros{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.livro{
+    background-color: #23496d;
+    color: rgba(255, 255, 255, 0.953);
+    width: 170px;
+    height: auto;
+    padding: 5px 5px 12px 5px;
+    margin: 7px;
+    text-align: center;
+    font-size: 9px;
+    overflow: hidden;
+}
+
+.livroa{
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    width: 170px;
+    height: auto;
+    padding: 2px;
+    margin: 5px;
+    text-align: center;
+    font-size: 9px;
+    overflow: hidden;
+    border: 10px;
+}
+
+.livro:hover
+{
+    background-color: rgb(57, 93, 138);
+    color: rgb(255, 255, 255);
+    box-shadow:  3px 3px 3px  rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: 500ms
+}
+
+.livro img{
+    margin: 5px;
+    width: 80%;
+    height: 80%;
+}

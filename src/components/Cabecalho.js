@@ -9,10 +9,10 @@ import { MdHome } from 'react-icons/md'
 const Cabecalho = () => {
 
     return (
-        <Navbar bg="primary" variant="dark">
-            <Navbar.Brand href="#inicio"><BsBook />BookRead</Navbar.Brand>
+        <Navbar bg="secondary" variant="dark" fixed="center">
+            <Navbar.Brand href="#/"><BsBook />BookRead</Navbar.Brand>
             <Nav className="mr-auto">
-                <Nav.Link href="#inicio"><MdHome />Inicio</Nav.Link>
+                <Nav.Link href="#/"><MdHome />Inicio</Nav.Link>
                 <Nav.Link href="#/livros"><BsFillBookmarksFill />Livros</Nav.Link>
             </Nav>
         </Navbar>
