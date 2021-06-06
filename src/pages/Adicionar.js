@@ -87,12 +87,12 @@ const Inicio = () => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid style={{ padding: 0 }}>
                 <Cabecalho />
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center"  style={{ margin: 0 }}>
                     <h3>Adicionar Livro</h3>
                 </Row>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center"  style={{ margin: 0 }}>
                     <Col lg={6} xs={12}>
                         <Form method="post">
                             <Form.Group controlId="nome">

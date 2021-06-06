@@ -15,12 +15,12 @@ const Inicio = () => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid style={{ padding: 0 }}>
                 <Cabecalho />
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center" style={{ margin: 0 }}>
                     <h1>Seja bem-vindo ao BookRead</h1>
                 </Row>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center" style={{ margin: 0 }}>
                     <Button type="button" href="#/livros">
                         Lista de Livros
                     </Button>

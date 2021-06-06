@@ -129,7 +129,7 @@ const Livros = () => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid style={{ padding: 0 }}>
                 <Cabecalho />
                 <div className="livros">
                     {

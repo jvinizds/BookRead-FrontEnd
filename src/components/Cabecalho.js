@@ -10,7 +10,7 @@ import { MdHome } from 'react-icons/md'
 const Cabecalho = () => {
 
     return (
-        <Navbar bg="secondary" variant="dark" fixed="center">
+        <Navbar bg="secondary" variant="dark" expand="lg">
             <Navbar.Brand href="#/"><BsBook />BookRead</Navbar.Brand>
             <Nav className="mr-auto">
                 <Nav.Link href="#/"><MdHome />Inicio</Nav.Link>
