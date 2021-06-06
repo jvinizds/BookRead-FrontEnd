@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Toast from 'react-bootstrap/Toast'
 
 import { FaImage } from 'react-icons/fa'
@@ -15,43 +16,20 @@ import Rodape from '../components/Rodape'
 import { BACKEND } from '../constants'
 import '../App.css'
 
-const Livros = () => {
+const Inicio = () => {
+
+    const valorInicial = { nome: '', autor: '', genero: '', ano_lancamento: '', url_img: '', link_compra: '', }
 
     const [livro, setLivro] = useState([])
-    const [livros, setLivros] = useState([])
-    const [carregandoLivros, setCarregandoLivros] = useState(false)
-    const [mostrarLivro, setMostrarLivro] = useState(false)
     const [salvandoLivro, setSalvandoLivro] = useState(false)
-    const [redirecionar, setRedirecionar] = React.useState(false);
 
 
     const [aviso, setAviso] = useState('')
     const [erros, setErros] = useState({})
 
-    const { nome, status } = livro
-
     useEffect(() => {
         document.title = 'BookRead'
-        obterLivros()
-        if (redirecionar) {
-            window.open(livro.link_compra, '_blank');
-            setRedirecionar(false);
-        }
-    }, [redirecionar])
-
-    async function obterLivros() {
-        setCarregandoLivros(true)
-        let url = `${BACKEND}/livros`
-        await fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                setLivros(data)
-            })
-            .catch(function (error) {
-                console.error(`O seguinte erro foi apresentado ao obter os livros: ${error.message}`)
-            })
-        setCarregandoLivros(false)
-    }
+    }, [])
 
     const imagemLivro = (props) => (
         <Tooltip {...props}>
@@ -73,7 +51,7 @@ const Livros = () => {
         if (!livro.genero || livro.genero === '' || livro.genero.length > 50 || livro.genero.length < 1) novosErros.genero = 'O genero deve ter entre 1 a 40 caracteres'
 
         if (!livro.ano_lancamento || livro.ano_lancamento === '' || livro.ano_lancamento.length > 4 || livro.ano_lancamento.length < 1) novosErros.ano_lancamento = 'O ano de lançamento deve ter pelo menos 1 caracter e no maximo 4'
-        
+
         if (!livro.url_img || livro.url_img === '') novosErros.url_img = 'A URL de imagem não pode ser vazio'
 
         if (!livro.link_compra || livro.link_compra === '') novosErros.link_compra = 'O link de compra não pode ser vazio'
@@ -90,7 +68,7 @@ const Livros = () => {
             setSalvandoLivro(true)
             let url = `${BACKEND}/livros`
             await fetch(url, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
@@ -99,8 +77,7 @@ const Livros = () => {
             }).then(response => response.json())
                 .then(data => {
                     (data._id || data.message) ? setAviso('Livro salvo com sucesso') : setAviso('')
-                    setMostrarLivro(false)
-                    obterLivros()
+                    setLivro(valorInicial)
                 }).catch(function (error) {
                     console.error(`Erro ao salvar o livro: ${error.message}`)
                 })
@@ -108,65 +85,15 @@ const Livros = () => {
         }
     }
 
-    async function excluirLivro() {
-        let url = `${BACKEND}/livros/${livro._id}`
-        await fetch(url, {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(data => {
-                data.message ? setAviso(data.message) : setAviso('')
-                setMostrarLivro(false)
-                obterLivros()
-            })
-            .catch(function (error) {
-                console.error(`Erro ao excluir o livro: ${error.message}`)
-            })
-    }
-
     return (
         <>
             <Container fluid className="p-0">
                 <Cabecalho />
-                <div className="livros">
-                    {
-                        livros.map(livro => (
-                            <div className="livro" onClick={() => {
-                                setLivro(livro)
-                                setMostrarLivro(true)
-                            }}>
-                                <img src={livro.url_img}></img>
-                                <h5>{livro.nome}</h5>
-                            </div>
-                        ))
-                    }
-                </div>
-                <Modal
-                    animation={false}
-                    show={mostrarLivro}
-                    onHide={() => setMostrarLivro(false)}
-                    backdrop="static"
-                    scrollable={true}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            <h2>
-                                {livro.nome}
-                                &nbsp;
-                                <OverlayTrigger
-                                    placement="right"
-                                    delay={{ show: 100, hide: 100 }}
-                                    overlay={imagemLivro}
-                                >
-                                    <FaImage />
-                                </OverlayTrigger>
-                            </h2>
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+                <Row className="justify-content-md-center">
+                    <h3>Adicionar Livro</h3>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col md={6}>
                         <Form method="post">
                             <Form.Group controlId="nome">
                                 <Form.Label>Nome</Form.Label>
@@ -221,7 +148,16 @@ const Livros = () => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="url_img">
-                                <Form.Label>Url Imagem</Form.Label>
+                                <Form.Label>
+                                    Url Imagem
+                                <OverlayTrigger
+                                        placement="right"
+                                        delay={{ show: 100, hide: 100 }}
+                                        overlay={imagemLivro}
+                                    >
+                                        <FaImage />
+                                    </OverlayTrigger>
+                                </Form.Label>
                                 <Form.Control
                                     name="url_img"
                                     type="text"
@@ -243,41 +179,29 @@ const Livros = () => {
                                     isInvalid={!!erros.link_compra}
                                 />
                                 <Form.Control.Feedback type='invalid'>
-                                    {erros.url_img}
+                                    {erros.link_compra}
                                 </Form.Control.Feedback>
-                                <Button variant="outline-info" title="Link Compra"
-                                    onClick={() => setRedirecionar(true)}>
-                                    Link Compra
-                            </Button>
                             </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button className="mr-auto" variant="danger" title="Cancelar"
-                            onClick={() => {
-                                excluirLivro()
-                            }}>
-                            Excluir
-                            </Button>
-                        <Button variant="success" type="submit" title="Salvar o registro"
-                            onClick={(e) => {
-                                salvarLivro(e)
-                            }}>
 
-                            {salvandoLivro
-                                ? 'Salvando...'
-                                : 'Salvar'
-                            }
-                        </Button>
-                            &nbsp;
-                            <Button variant="primary" type="button" title="Cancelar"
-                            onClick={(e) => {
-                                setMostrarLivro(false)
-                            }}>
-                            Cancelar
+
+                            <Button variant="primary" type="button" title="Limpar"
+                                onClick={()=> setLivro(valorInicial)}>
+                                Limpar
                             </Button>
-                    </Modal.Footer>
-                </Modal>
+                            &nbsp;
+                            <Button variant="success" type="submit" title="Salvar o registro"
+                                onClick={(e) => {
+                                    salvarLivro(e)
+                                }}>
+
+                                {salvandoLivro
+                                    ? 'Salvando...'
+                                    : 'Salvar'
+                                }
+                            </Button>
+                        </Form>
+                    </Col>
+                </Row>
                 <Toast
                     onClose={() => setAviso('')}
                     show={aviso.length > 0}
@@ -299,4 +223,4 @@ const Livros = () => {
     )
 }
 
-export default Livros
+export default Inicio

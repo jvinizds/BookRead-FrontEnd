@@ -43,3 +43,11 @@
     width: 80%;
     height: 80%;
 }
+
+.tooltip {
+    background-color: transparent;
+}
+
+.tooltip.show{
+    opacity: 1;
+}
