@@ -243,9 +243,9 @@ const Livros = () => {
                                     isInvalid={!!erros.link_compra}
                                 />
                                 <Form.Control.Feedback type='invalid'>
-                                    {erros.url_img}
+                                    {erros.link_compra}
                                 </Form.Control.Feedback>
-                                <Button variant="outline-info" title="Link Compra"
+                                <Button inline variant="outline-info" title="Link Compra"
                                     onClick={() => setRedirecionar(true)}>
                                     Link Compra
                             </Button>
