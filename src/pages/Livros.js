@@ -23,12 +23,9 @@ const Livros = () => {
     const [mostrarLivro, setMostrarLivro] = useState(false)
     const [salvandoLivro, setSalvandoLivro] = useState(false)
     const [redirecionar, setRedirecionar] = React.useState(false);
-
-
+    const [confirmaExclusao, setConfirmaExclusao] = useState(false)
     const [aviso, setAviso] = useState('')
     const [erros, setErros] = useState({})
-
-    const { nome, status } = livro
 
     useEffect(() => {
         document.title = 'BookRead'
@@ -73,7 +70,7 @@ const Livros = () => {
         if (!livro.genero || livro.genero === '' || livro.genero.length > 50 || livro.genero.length < 1) novosErros.genero = 'O genero deve ter entre 1 a 40 caracteres'
 
         if (!livro.ano_lancamento || livro.ano_lancamento === '' || livro.ano_lancamento.length > 4 || livro.ano_lancamento.length < 1) novosErros.ano_lancamento = 'O ano de lançamento deve ter pelo menos 1 caracter e no maximo 4'
-        
+
         if (!livro.url_img || livro.url_img === '') novosErros.url_img = 'A URL de imagem não pode ser vazio'
 
         if (!livro.link_compra || livro.link_compra === '') novosErros.link_compra = 'O link de compra não pode ser vazio'
@@ -255,7 +252,8 @@ const Livros = () => {
                     <Modal.Footer>
                         <Button className="mr-auto" variant="danger" title="Cancelar"
                             onClick={() => {
-                                excluirLivro()
+                                setConfirmaExclusao(true)
+                                setMostrarLivro(false)
                             }}>
                             Excluir
                             </Button>
@@ -275,6 +273,26 @@ const Livros = () => {
                                 setMostrarLivro(false)
                             }}>
                             Cancelar
+                            </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal animation={false} show={confirmaExclusao} backdrop="static" onHide={() => setConfirmaExclusao(false)}>
+                    <Modal.Header>
+                        <Modal.Title>Confirmação da Exclusão</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Confirma a exclusão do livro exibido?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="danger" onClick={() => setConfirmaExclusao(!confirmaExclusao)}>
+                            ❌Cancelar
+                            </Button>
+                        <Button variant="success"
+                            onClick={() => {
+                                setConfirmaExclusao(!confirmaExclusao)
+                                excluirLivro()
+                            }}>
+                            ✔️Confirmar
                             </Button>
                     </Modal.Footer>
                 </Modal>
