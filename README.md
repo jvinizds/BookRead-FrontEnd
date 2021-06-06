@@ -2,7 +2,7 @@
 
 Essa é uma aplicação que consome dados de um BackEnd em NodeJS integrado ao MongoDB.
 
-Rodando no GitPages com o link: 
+Rodando no GitPages com o link: https://jvinizds.github.io/BookRead-FrontEnd
 
 <h2>Utilizar projeto</h2>
 
