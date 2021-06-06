@@ -93,7 +93,7 @@ const Inicio = () => {
                     <h3>Adicionar Livro</h3>
                 </Row>
                 <Row className="justify-content-md-center">
-                    <Col md={6}>
+                    <Col lg={6} xs={12}>
                         <Form method="post">
                             <Form.Group controlId="nome">
                                 <Form.Label>Nome</Form.Label>
